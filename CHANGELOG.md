@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.2.0...pre-commit-hooks-v0.2.1) (2026-04-12)
+
+
+### 🐛 Bug Fixes
+
+* correct PyPI package name to kellerlab-pre-commit-hooks ([#4](https://github.com/kellerlabs/pre-commit-hooks/issues/4)) ([488bd67](https://github.com/kellerlabs/pre-commit-hooks/commit/488bd67d781c933b0df2733d31e06230e26b01df))
+
 ## [0.2.0](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.1.0...pre-commit-hooks-v0.2.0) (2026-04-12)
 
 
