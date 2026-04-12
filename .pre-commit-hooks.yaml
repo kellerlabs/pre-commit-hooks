@@ -1,0 +1,16 @@
+- id: flatten-validate
+  name: Validate Flatten Exports
+  entry: flatten-validate
+  language: python
+  pass_filenames: false
+  always_run: true
+  description: Flatten OpenSCAD files via scadm and validate they are committed.
+  stages: [pre-commit, pre-merge-commit, pre-push, manual]
+
+- id: optimize-images
+  name: Optimize Images
+  entry: optimize-images
+  language: python
+  types_or: [jpeg]
+  description: Resize and compress JPEG images to reduce repository size.
+  stages: [pre-commit, pre-merge-commit, pre-push, manual]
