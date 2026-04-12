@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.2.1...pre-commit-hooks-v0.2.2) (2026-04-12)
+
+
+### 🐛 Bug Fixes
+
+* replace Unicode checkmarks with ASCII and bump create-github-app-token to v3.1.1 ([#6](https://github.com/kellerlabs/pre-commit-hooks/issues/6)) ([369e458](https://github.com/kellerlabs/pre-commit-hooks/commit/369e4583094910acef55d1000ee1467c57fd21c5))
+
 ## [0.2.1](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.2.0...pre-commit-hooks-v0.2.1) (2026-04-12)
 
 
