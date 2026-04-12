@@ -103,7 +103,7 @@ def main():
         return 1
 
     if not flatten_dirs:
-        print("✓ No flatten directories to validate")
+        print("OK: No flatten directories to validate")
         return 0
 
     modified = _git_modified(flatten_dirs)
@@ -127,7 +127,7 @@ def main():
         print(f"  git add {dirs}")
         return 1
 
-    print("✓ All flattened files are committed")
+    print("OK: All flattened files are committed")
     return 0
 
 
