@@ -2,7 +2,7 @@
 
 Reusable [pre-commit](https://pre-commit.com/) hooks for OpenSCAD projects.
 
-Published on PyPI as [`kellerlabs-pre-commit-hooks`](https://pypi.org/project/kellerlabs-pre-commit-hooks/).
+Published on PyPI as [`kellerlab-pre-commit-hooks`](https://pypi.org/project/kellerlab-pre-commit-hooks/).
 
 ## 📌 What
 
