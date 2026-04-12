@@ -1,0 +1,46 @@
+---
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (build but do not publish)'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  id-token: write  # Required for PyPI trusted publishing
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+
+      - name: Build package
+        run: python -m build
+
+      - name: Check package
+        run: twine check dist/*
+
+      - name: Publish to PyPI
+        if: ${{ !inputs.dry_run }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          print-hash: true

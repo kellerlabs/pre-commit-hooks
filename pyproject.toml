@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kellerlabs-pre-commit-hooks"
+version = "0.1.0"
+description = "Reusable pre-commit hooks for OpenSCAD projects"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [
+    {name = "Patrick Pötz", email = "kellervater@gmail.com"}
+]
+keywords = ["pre-commit", "openscad", "image-optimization", "scadm"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "scadm>=0.6.0",
+    "Pillow>=11.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/kellerlabs/pre-commit-hooks"
+Repository = "https://github.com/kellerlabs/pre-commit-hooks"
+Issues = "https://github.com/kellerlabs/pre-commit-hooks/issues"
+Changelog = "https://github.com/kellerlabs/pre-commit-hooks/blob/main/CHANGELOG.md"
+
+[project.scripts]
+flatten-validate = "pre_commit_hooks.flatten_validate:main"
+optimize-images = "pre_commit_hooks.optimize_images:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["pre_commit_hooks*"]
+
+[tool.setuptools.package-data]
+pre_commit_hooks = ["py.typed"]

@@ -1,0 +1,110 @@
+"""Tests for optimize_images hook."""
+
+from unittest import mock
+
+from PIL import Image
+
+from pre_commit_hooks.optimize_images import main
+
+
+def _create_jpeg(path, width, height, exif=False):
+    """Create a test JPEG file.
+
+    Args:
+        path: File path to write.
+        width: Image width in pixels.
+        height: Image height in pixels.
+        exif: If True, embed a fake EXIF marker.
+    """
+    img = Image.new("RGB", (width, height), color="red")
+    if exif:
+        # Minimal EXIF with a GPS IFD pointer (privacy test)
+        # EXIF header: Exif\x00\x00 + TIFF header (little-endian)
+        exif_bytes = b"Exif\x00\x00II\x2a\x00\x08\x00\x00\x00\x00\x00\x00\x00"
+        img.info["exif"] = exif_bytes
+        img.save(str(path), "JPEG", quality=95, exif=exif_bytes)
+    else:
+        img.save(str(path), "JPEG", quality=95)
+
+
+class TestOptimizeImages:
+    """Tests for the optimize-images hook."""
+
+    def test_large_image_resized(self, tmp_path):
+        """Images wider than max-width are resized."""
+        img_path = tmp_path / "large.jpg"
+        _create_jpeg(img_path, 3000, 2000)
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(img_path)]):
+            result = main()
+
+        assert result == 1  # hook fails because file was modified
+        with Image.open(img_path) as img:
+            assert img.size[0] == 1920
+            assert img.size[1] == 1280  # proportional
+
+    def test_small_image_untouched(self, tmp_path):
+        """Images within max-width are not modified."""
+        img_path = tmp_path / "small.jpg"
+        _create_jpeg(img_path, 800, 600)
+        original_size = img_path.stat().st_size
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(img_path)]):
+            result = main()
+
+        assert result == 0  # hook passes
+        assert img_path.stat().st_size == original_size
+
+    def test_exact_width_untouched(self, tmp_path):
+        """Images at exactly max-width are not modified."""
+        img_path = tmp_path / "exact.jpg"
+        _create_jpeg(img_path, 1920, 1080)
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(img_path)]):
+            result = main()
+
+        assert result == 0
+
+    def test_exif_stripped(self, tmp_path):
+        """EXIF data is stripped from resized images."""
+        img_path = tmp_path / "gps.jpg"
+        _create_jpeg(img_path, 3000, 2000, exif=True)
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(img_path)]):
+            main()
+
+        with Image.open(img_path) as img:
+            assert img.info.get("exif") is None
+
+    def test_custom_quality(self, tmp_path):
+        """Custom quality setting is applied."""
+        img_path = tmp_path / "quality.jpg"
+        _create_jpeg(img_path, 3000, 2000)
+
+        with mock.patch("sys.argv", ["optimize-images", "--quality=50", "--max-width=1920", str(img_path)]):
+            result = main()
+
+        assert result == 1
+        with Image.open(img_path) as img:
+            assert img.size[0] == 1920
+
+    def test_multiple_files(self, tmp_path):
+        """Multiple files are processed; only oversized ones are modified."""
+        large = tmp_path / "large.jpg"
+        small = tmp_path / "small.jpg"
+        _create_jpeg(large, 4000, 3000)
+        _create_jpeg(small, 800, 600)
+        small_size = small.stat().st_size
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(large), str(small)]):
+            result = main()
+
+        assert result == 1  # large was modified
+        with Image.open(large) as img:
+            assert img.size[0] == 1920
+        assert small.stat().st_size == small_size
+
+    def test_no_files(self):
+        """Hook passes when no files are provided."""
+        with mock.patch("sys.argv", ["optimize-images"]):
+            assert main() == 0

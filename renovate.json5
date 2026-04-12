@@ -1,0 +1,43 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":enablePreCommit"
+  ],
+  // Disable platform-native automerge, let Renovate handle merges directly
+  "platformAutomerge": false,
+  // Disable hourly PR limit (default from config:recommended is 2)
+  "prHourlyLimit": 0,
+  "schedule": ["* * * * 0,6"],
+  // Use "deps" as commit type instead of "chore(deps)"
+  "semanticCommits": "enabled",
+  "semanticCommitType": "deps",
+  "semanticCommitScope": null,
+  "packageRules": [
+    // Override the semanticPrefixFixDepsChoreOthers preset from config:recommended
+    {
+      "matchPackageNames": ["*"],
+      "semanticCommitType": "deps"
+    },
+    {
+      // Group all GitHub Actions updates together
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions",
+      "groupSlug": "github-actions",
+      "automerge": true
+    },
+    {
+      "matchManagers": ["pre-commit"],
+      "groupName": "pre-commit hooks",
+      "groupSlug": "pre-commit-hooks",
+      "separateMajorMinor": false,
+      "automerge": true
+    },
+    {
+      // Automerge patch/minor updates for Python dependencies
+      "matchManagers": ["pip_requirements", "pep621"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    }
+  ]
+}
