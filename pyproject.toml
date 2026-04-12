@@ -28,6 +28,11 @@ dependencies = [
     "Pillow>=11.0.0",
 ]
 
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
+
 [project.urls]
 Homepage = "https://github.com/kellerlabs/pre-commit-hooks"
 Repository = "https://github.com/kellerlabs/pre-commit-hooks"
@@ -41,6 +46,3 @@ optimize-images = "pre_commit_hooks.optimize_images:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["pre_commit_hooks*"]
-
-[tool.setuptools.package-data]
-pre_commit_hooks = ["py.typed"]

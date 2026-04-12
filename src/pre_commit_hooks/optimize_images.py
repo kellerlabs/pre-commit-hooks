@@ -1,13 +1,14 @@
 """Pre-commit hook: resize and compress JPEG images."""
 
 import argparse
+import shlex
 import sys
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 
 def _optimize_file(filepath, max_width, quality):
-    """Resize and compress a single JPEG file if needed.
+    """Resize, compress, and strip EXIF from a single JPEG file.
 
     Args:
         filepath: Path to the JPEG file.
@@ -18,18 +19,24 @@ def _optimize_file(filepath, max_width, quality):
         True if the file was modified, False otherwise.
     """
     with Image.open(filepath) as img:
+        # Apply EXIF orientation before checking size
+        img = ImageOps.exif_transpose(img)
         width, height = img.size
-        if width <= max_width:
+        needs_resize = width > max_width
+        has_exif = bool(img.info.get("exif"))
+
+        if not needs_resize and not has_exif:
             return False
 
-        ratio = max_width / width
-        new_size = (max_width, int(height * ratio))
+        if needs_resize:
+            ratio = max_width / width
+            new_height = max(1, round(height * ratio))
+            new_size = (max_width, new_height)
+            img = img.resize(new_size, Image.LANCZOS)
 
-        resized = img.resize(new_size, Image.LANCZOS)
-        # Convert to RGB to drop alpha channel and EXIF data (privacy: GPS etc.)
-        if resized.mode in ("RGBA", "P"):
-            resized = resized.convert("RGB")
-        resized.save(filepath, "JPEG", quality=quality, optimize=True)
+        if img.mode in ("RGBA", "P"):
+            img = img.convert("RGB")
+        img.save(filepath, "JPEG", quality=quality, optimize=True)
 
     return True
 
@@ -53,14 +60,17 @@ def main():
     args = parser.parse_args()
 
     modified = []
+    failed = False
     for filepath in args.filenames:
         try:
             if _optimize_file(filepath, args.max_width, args.quality):
                 modified.append(filepath)
         except Exception as exc:  # pylint: disable=broad-exception-caught
-            print(f"WARNING: Failed to process {filepath}: {exc}")
+            print(f"ERROR: Failed to process {filepath}: {exc}")
+            failed = True
 
     if modified:
+        quoted = " ".join(shlex.quote(f) for f in modified)
         print("")
         print("Images were resized/compressed by this hook:")
         print("")
@@ -68,10 +78,10 @@ def main():
             print(f"  {f}")
         print("")
         print("Run the following to stage the optimized files:")
-        print(f"  git add {' '.join(modified)}")
+        print(f"  git add {quoted}")
         return 1
 
-    return 0
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":

@@ -44,7 +44,7 @@ class TestOptimizeImages:
             assert img.size[1] == 1280  # proportional
 
     def test_small_image_untouched(self, tmp_path):
-        """Images within max-width are not modified."""
+        """Small images without EXIF are not modified."""
         img_path = tmp_path / "small.jpg"
         _create_jpeg(img_path, 800, 600)
         original_size = img_path.stat().st_size
@@ -108,3 +108,25 @@ class TestOptimizeImages:
         """Hook passes when no files are provided."""
         with mock.patch("sys.argv", ["optimize-images"]):
             assert main() == 0
+
+    def test_exif_stripped_small_image(self, tmp_path):
+        """EXIF data is stripped even when image is within max-width."""
+        img_path = tmp_path / "small_exif.jpg"
+        _create_jpeg(img_path, 800, 600, exif=True)
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(img_path)]):
+            result = main()
+
+        assert result == 1  # file was modified (EXIF stripped)
+        with Image.open(img_path) as img:
+            assert img.info.get("exif") is None
+
+    def test_error_causes_failure(self, tmp_path):
+        """Hook fails when processing a file raises an exception."""
+        bad_path = tmp_path / "not_a_jpeg.jpg"
+        bad_path.write_text("not an image")
+
+        with mock.patch("sys.argv", ["optimize-images", str(bad_path)]):
+            result = main()
+
+        assert result == 1

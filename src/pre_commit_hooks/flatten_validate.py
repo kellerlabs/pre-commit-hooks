@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import shlex
 import subprocess
 import sys
 from pathlib import Path
@@ -38,6 +39,9 @@ def _git_modified(paths):
 
     Returns:
         List of modified file paths.
+
+    Raises:
+        SystemExit: If git diff fails.
     """
     if not paths:
         return []
@@ -47,6 +51,9 @@ def _git_modified(paths):
         text=True,
         check=False,
     )
+    if result.returncode != 0:
+        print(f"ERROR: git diff failed: {result.stderr.strip()}")
+        sys.exit(1)
     return [line for line in result.stdout.strip().split("\n") if line]
 
 
@@ -58,6 +65,9 @@ def _git_untracked(paths):
 
     Returns:
         List of untracked file paths.
+
+    Raises:
+        SystemExit: If git ls-files fails.
     """
     if not paths:
         return []
@@ -67,6 +77,9 @@ def _git_untracked(paths):
         text=True,
         check=False,
     )
+    if result.returncode != 0:
+        print(f"ERROR: git ls-files failed: {result.stderr.strip()}")
+        sys.exit(1)
     return [line for line in result.stdout.strip().split("\n") if line]
 
 
@@ -108,7 +121,7 @@ def main():
             print("Untracked files:")
             for f in untracked:
                 print(f"  {f}")
-        dirs = " ".join(flatten_dirs)
+        dirs = " ".join(shlex.quote(d) for d in flatten_dirs)
         print("")
         print("Run the following to stage them:")
         print(f"  git add {dirs}")

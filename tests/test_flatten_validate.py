@@ -22,11 +22,12 @@ def scadm_json(tmp_path, monkeypatch):
     return tmp_path
 
 
-def _mock_run(returncode=0, stdout=""):
+def _mock_run(returncode=0, stdout="", stderr=""):
     """Create a mock subprocess result."""
     result = mock.MagicMock()
     result.returncode = returncode
     result.stdout = stdout
+    result.stderr = stderr
     return result
 
 
@@ -96,3 +97,28 @@ class TestFlattenValidate:
         # Verify git commands used our custom dir
         diff_call = mock_run.call_args_list[1]
         assert "custom/out" in diff_call[0][0]
+
+    @mock.patch("pre_commit_hooks.flatten_validate.subprocess.run")
+    def test_git_diff_failure(self, mock_run):
+        """Hook exits when git diff fails."""
+        mock_run.side_effect = [
+            _mock_run(0),  # scadm flatten --all
+            _mock_run(128, stderr="fatal: not a git repository"),  # git diff
+        ]
+        with mock.patch("sys.argv", ["flatten-validate"]):
+            with pytest.raises(SystemExit) as exc_info:
+                main()
+            assert exc_info.value.code == 1
+
+    @mock.patch("pre_commit_hooks.flatten_validate.subprocess.run")
+    def test_git_ls_files_failure(self, mock_run):
+        """Hook exits when git ls-files fails."""
+        mock_run.side_effect = [
+            _mock_run(0),  # scadm flatten --all
+            _mock_run(0, stdout=""),  # git diff
+            _mock_run(128, stderr="fatal: not a git repository"),  # git ls-files
+        ]
+        with mock.patch("sys.argv", ["flatten-validate"]):
+            with pytest.raises(SystemExit) as exc_info:
+                main()
+            assert exc_info.value.code == 1
