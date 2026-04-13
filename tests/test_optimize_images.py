@@ -220,3 +220,44 @@ class TestOptimizeImages:
             assert img.size[0] == 1920
         with Image.open(png_path) as img:
             assert img.size[0] == 1920
+
+    def test_paletted_png_resized(self, tmp_path):
+        """Paletted PNGs are resized and palette is preserved."""
+        img_path = tmp_path / "palette.png"
+        img = Image.new("P", (3000, 2000))
+        img.putpalette([i % 256 for i in range(768)])
+        img.save(str(img_path), "PNG")
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(img_path)]):
+            result = main()
+
+        assert result == 1
+        with Image.open(img_path) as img:
+            assert img.mode == "P"
+            assert img.size[0] == 1920
+            assert img.getpalette() is not None
+
+    def test_paletted_png_with_transparency(self, tmp_path):
+        """Paletted PNGs with transparency are handled correctly."""
+        img_path = tmp_path / "palette_alpha.png"
+        img = Image.new("RGBA", (3000, 2000), color=(255, 0, 0, 128))
+        img = img.convert("P")
+        img.save(str(img_path), "PNG")
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(img_path)]):
+            result = main()
+
+        assert result == 1
+        with Image.open(img_path) as img:
+            assert img.size[0] == 1920
+
+    def test_unsupported_format_raises(self, tmp_path):
+        """Unsupported image formats cause a failure."""
+        img_path = tmp_path / "image.bmp"
+        img = Image.new("RGB", (800, 600), color="green")
+        img.save(str(img_path), "BMP")
+
+        with mock.patch("sys.argv", ["optimize-images", str(img_path)]):
+            result = main()
+
+        assert result == 1

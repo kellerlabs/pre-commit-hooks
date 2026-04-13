@@ -24,6 +24,9 @@ def _optimize_file(filepath, max_width, quality):
     """
     with Image.open(filepath) as img:
         img_format = img.format  # "JPEG" or "PNG"
+        if img_format not in ("JPEG", "PNG"):
+            msg = f"Unsupported format '{img_format}' for {filepath}"
+            raise ValueError(msg)
         has_png_text = img_format == "PNG" and bool(getattr(img, "text", None))
         img = ImageOps.exif_transpose(img)
         width, height = img.size
@@ -40,9 +43,14 @@ def _optimize_file(filepath, max_width, quality):
             img = img.resize(new_size, Image.LANCZOS)
 
         if img_format == "PNG":
-            # Strip metadata by creating a clean image
+            # Strip metadata by creating a clean image without materializing
+            # the pixel stream as a Python list.
             clean = Image.new(img.mode, img.size)
-            clean.putdata(list(img.get_flattened_data()))
+            if img.mode == "P":
+                palette = img.getpalette()
+                if palette is not None:
+                    clean.putpalette(palette)
+            clean.frombytes(img.tobytes())
             clean.save(filepath, "PNG", optimize=True)
         else:
             if img.mode in ("RGBA", "P"):
