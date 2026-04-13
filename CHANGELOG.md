@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.3](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.2.2...pre-commit-hooks-v0.2.3) (2026-04-12)
+
+
+### 🐛 Bug Fixes
+
+* use capture pattern in automerge for error-safe iteration ([#8](https://github.com/kellerlabs/pre-commit-hooks/issues/8)) ([8038071](https://github.com/kellerlabs/pre-commit-hooks/commit/80380715b3e0963dc4e7d0ad4af7fd5f9a28aa62))
+
+
+### 📦 Dependencies
+
+* update dependency python to 3.14 ([#10](https://github.com/kellerlabs/pre-commit-hooks/issues/10)) ([32b6177](https://github.com/kellerlabs/pre-commit-hooks/commit/32b6177806560930e54ac665dfff92240426e824))
+
 ## [0.2.2](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.2.1...pre-commit-hooks-v0.2.2) (2026-04-12)
 
 
