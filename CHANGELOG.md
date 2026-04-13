@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.2.3...pre-commit-hooks-v0.3.0) (2026-04-13)
+
+
+### ✨ Features
+
+* add PNG support to optimize-images hook ([#12](https://github.com/kellerlabs/pre-commit-hooks/issues/12)) ([5db8c7f](https://github.com/kellerlabs/pre-commit-hooks/commit/5db8c7f504b8a30ff55098898335a6f2846fa8e6))
+
 ## [0.2.3](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.2.2...pre-commit-hooks-v0.2.3) (2026-04-12)
 
 
