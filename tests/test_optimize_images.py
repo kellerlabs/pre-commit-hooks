@@ -3,6 +3,7 @@
 from unittest import mock
 
 from PIL import Image
+from PIL.PngImagePlugin import PngInfo
 
 from pre_commit_hooks.optimize_images import main
 
@@ -25,6 +26,23 @@ def _create_jpeg(path, width, height, exif=False):
         img.save(str(path), "JPEG", quality=95, exif=exif_bytes)
     else:
         img.save(str(path), "JPEG", quality=95)
+
+
+def _create_png(path, width, height, text_meta=False):
+    """Create a test PNG file.
+
+    Args:
+        path: File path to write.
+        width: Image width in pixels.
+        height: Image height in pixels.
+        text_meta: If True, embed text metadata chunks.
+    """
+    img = Image.new("RGBA", (width, height), color="blue")
+    pnginfo = PngInfo()
+    if text_meta:
+        pnginfo.add_text("Software", "TestSuite")
+        pnginfo.add_text("Comment", "test metadata")
+    img.save(str(path), "PNG", pnginfo=pnginfo)
 
 
 class TestOptimizeImages:
@@ -130,3 +148,75 @@ class TestOptimizeImages:
             result = main()
 
         assert result == 1
+
+    # --- PNG tests ---
+
+    def test_large_png_resized(self, tmp_path):
+        """PNGs wider than max-width are resized."""
+        img_path = tmp_path / "large.png"
+        _create_png(img_path, 3000, 2000)
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(img_path)]):
+            result = main()
+
+        assert result == 1
+        with Image.open(img_path) as img:
+            assert img.size[0] == 1920
+            assert img.size[1] == 1280
+
+    def test_small_png_untouched(self, tmp_path):
+        """Small PNGs without metadata are not modified."""
+        img_path = tmp_path / "small.png"
+        _create_png(img_path, 800, 600)
+        original_size = img_path.stat().st_size
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(img_path)]):
+            result = main()
+
+        assert result == 0
+        assert img_path.stat().st_size == original_size
+
+    def test_png_metadata_stripped(self, tmp_path):
+        """Text metadata is stripped from PNGs."""
+        img_path = tmp_path / "meta.png"
+        _create_png(img_path, 800, 600, text_meta=True)
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(img_path)]):
+            result = main()
+
+        assert result == 1
+        with Image.open(img_path) as img:
+            assert not getattr(img, "text", None)
+
+    def test_png_preserves_transparency(self, tmp_path):
+        """PNGs retain their alpha channel after optimization."""
+        img_path = tmp_path / "alpha.png"
+        img = Image.new("RGBA", (3000, 2000), color=(0, 0, 255, 128))
+        img.save(str(img_path), "PNG")
+
+        with mock.patch("sys.argv", ["optimize-images", "--max-width=1920", str(img_path)]):
+            result = main()
+
+        assert result == 1
+        with Image.open(img_path) as img:
+            assert img.mode == "RGBA"
+            assert img.size[0] == 1920
+
+    def test_mixed_jpeg_and_png(self, tmp_path):
+        """Both JPEG and PNG files are handled in a single run."""
+        jpg_path = tmp_path / "big.jpg"
+        png_path = tmp_path / "big.png"
+        _create_jpeg(jpg_path, 4000, 3000)
+        _create_png(png_path, 4000, 3000)
+
+        with mock.patch(
+            "sys.argv",
+            ["optimize-images", "--max-width=1920", str(jpg_path), str(png_path)],
+        ):
+            result = main()
+
+        assert result == 1
+        with Image.open(jpg_path) as img:
+            assert img.size[0] == 1920
+        with Image.open(png_path) as img:
+            assert img.size[0] == 1920

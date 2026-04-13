@@ -11,6 +11,6 @@
   name: Optimize Images
   entry: optimize-images
   language: python
-  types_or: [jpeg]
-  description: Resize and compress JPEG images to reduce repository size.
+  types_or: [jpeg, png]
+  description: Resize and compress JPEG and PNG images to reduce repository size.
   stages: [pre-commit, pre-merge-commit, pre-push, manual]
