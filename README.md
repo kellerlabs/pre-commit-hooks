@@ -11,7 +11,7 @@ Two hooks for OpenSCAD-based 3D printing projects:
 | Hook | Description |
 |------|-------------|
 | `flatten-validate` | Runs `scadm flatten --all` and fails if flattened files have uncommitted changes |
-| `optimize-images` | Resizes oversized JPEGs, compresses them, and strips EXIF data (privacy) |
+| `optimize-images` | Resizes oversized JPEGs/PNGs, compresses them, and strips metadata (privacy) |
 
 ## 🔧 Usage
 
@@ -44,7 +44,7 @@ Flattens OpenSCAD files via [scadm](https://pypi.org/project/scadm/) and validat
 
 ### `optimize-images`
 
-Resizes JPEGs exceeding max width, compresses to target quality, and strips EXIF metadata (removes GPS coordinates from real-life photos).
+Resizes JPEGs and PNGs exceeding max width, compresses them, and strips metadata. EXIF data (including GPS coordinates) is removed from JPEGs; text metadata chunks are removed from PNGs.
 
 ```yaml
 - id: optimize-images
@@ -56,7 +56,7 @@ Resizes JPEGs exceeding max width, compresses to target quality, and strips EXIF
 | Arg | Default | Description |
 |-----|---------|-------------|
 | `--max-width` | `1920` | Maximum image width in pixels |
-| `--quality` | `85` | JPEG compression quality (1-95) |
+| `--quality` | `85` | JPEG compression quality (1-95, ignored for PNG) |
 
 Both hooks **fail when files are modified**, printing instructions to `git add` the changes. Re-run `git commit` after staging.
 
