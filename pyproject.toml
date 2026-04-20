@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "kellerlab-pre-commit-hooks"
-version = "0.3.0"
+version = "0.3.1"
 description = "Reusable pre-commit hooks for OpenSCAD projects"
 readme = "README.md"
 requires-python = ">=3.11"
