@@ -28,12 +28,12 @@ HomeRacker is a modular 3D-printable rack-building system. Core components use p
   - Every code change that adds, modifies, or removes functionality **must** include a documentation update.
   - Follow the What / Why / How / References structure defined in the markdown instructions.
   - When renaming or restructuring code, update or rename the associated docs to keep everything tidy.
-  - When adding or modifying model parts (`parts/*.scad`), **generate preview PNGs** with `cmd/export/export-png.sh` and update both the model's README 📸 Catalog and the parent `models/README.md` index.
-- **Assets Policy**: All manually-created images (photos, diagrams, logos, MakerWorld description images) are hosted in [`kellerlabs/assets`](https://github.com/kellerlabs/assets). Push directly to its `main` branch. Reference via `https://raw.githubusercontent.com/kellerlabs/assets/main/<repo>/<path>`. Only auto-generated render PNGs (`**/renders/*.png`) are tracked in source repos. See [ADR-001](docs/decisions/ADR-001-image-hosting-assets-repo.md).
+  - When adding or modifying model parts (`parts/*.scad`), **generate preview PNGs** with `scadm export-png` and update both the model's README 📸 Catalog and the parent `models/README.md` index.
+- **Assets Policy**: All manually-created images (photos, diagrams, logos, MakerWorld description images) are hosted in [`kellerlabs/assets`](https://github.com/kellerlabs/assets). Push directly to its `main` branch. Reference via `https://raw.githubusercontent.com/kellerlabs/assets/main/<repo>/<path>`. Only auto-generated render PNGs (`**/renders/*.png`) are tracked in source repos. See [image-hosting-assets-repo](docs/decisions/image-hosting-assets-repo.md).
 - **Architecture Decision Records (ADRs)**:
-  - When the user makes an architectural or design decision during a session, create an ADR in `docs/decisions/`.
-  - Format: `ADR-NNN-<slug>.md`, numbered sequentially.
-  - Cross-link the ADR from related docs (READMEs, instructions, other ADRs) where viable.
+  - When the user makes an architectural or design decision during a session, create a decision record in `docs/decisions/`.
+  - Format: `kebab-case-title.md` (no numeric prefixes).
+  - Cross-link from related docs (READMEs, instructions, other decisions) where viable.
 - **Commits**: Use [Conventional Commits](https://www.conventionalcommits.org/) format
   - Types: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`
   - Format: `type(scope): description` or `type: description`
