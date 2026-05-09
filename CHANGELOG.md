@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.1...pre-commit-hooks-v0.3.2) (2026-05-09)
+
+
+### 📚 Documentation
+
+* update copilot instructions for scadm export-png and ADR convention ([#16](https://github.com/kellerlabs/pre-commit-hooks/issues/16)) ([9557df4](https://github.com/kellerlabs/pre-commit-hooks/commit/9557df40242804e94df0c9a25b1171886b869359))
+
 ## [0.3.1](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.0...pre-commit-hooks-v0.3.1) (2026-04-20)
 
 
