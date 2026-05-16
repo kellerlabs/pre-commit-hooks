@@ -7,7 +7,7 @@ repos:
         stages: [commit-msg]
         args: []
   - repo: https://github.com/psf/black
-    rev: 26.3.1
+    rev: 26.5.0
     hooks:
       - id: black
         args:
