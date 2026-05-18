@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.3](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.2...pre-commit-hooks-v0.3.3) (2026-05-17)
+
+
+### 📦 Dependencies
+
+* update actions/create-github-app-token action to v3.2.0 ([#19](https://github.com/kellerlabs/pre-commit-hooks/issues/19)) ([93aa2a8](https://github.com/kellerlabs/pre-commit-hooks/commit/93aa2a82a1c8e093374e6d2264e24b91e563101b))
+* update pre-commit hook psf/black to v26.5.0 ([#20](https://github.com/kellerlabs/pre-commit-hooks/issues/20)) ([f7ffaf4](https://github.com/kellerlabs/pre-commit-hooks/commit/f7ffaf40e6f7b9f31d042a374e13aa01ef971843))
+
+
+### 🔄 CI/CD
+
+* **instructions:** sync from homeracker ([9651215](https://github.com/kellerlabs/pre-commit-hooks/commit/96512150476fe565544a0f8d68738adbdd93ca06))
+
 ## [0.3.2](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.1...pre-commit-hooks-v0.3.2) (2026-05-09)
 
 
