@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.4](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.3...pre-commit-hooks-v0.3.4) (2026-05-23)
+
+
+### 📦 Dependencies
+
+* update pre-commit hook psf/black to v26.5.1 ([#21](https://github.com/kellerlabs/pre-commit-hooks/issues/21)) ([a85b903](https://github.com/kellerlabs/pre-commit-hooks/commit/a85b903f72de185ebd46f3f71600d5d433971284))
+
 ## [0.3.3](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.2...pre-commit-hooks-v0.3.3) (2026-05-17)
 
 
