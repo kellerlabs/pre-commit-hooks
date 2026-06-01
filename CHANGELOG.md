@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.5](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.4...pre-commit-hooks-v0.3.5) (2026-05-25)
+
+
+### 🔄 CI/CD
+
+* **instructions:** sync from homeracker ([00af084](https://github.com/kellerlabs/pre-commit-hooks/commit/00af08451212b79123c82c841ecb16dd3f304b2b))
+
 ## [0.3.4](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.3...pre-commit-hooks-v0.3.4) (2026-05-23)
 
 
