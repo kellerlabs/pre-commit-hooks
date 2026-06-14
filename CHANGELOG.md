@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.6](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.5...pre-commit-hooks-v0.3.6) (2026-06-14)
+
+
+### 📦 Dependencies
+
+* update pre-commit hooks to v4.0.6 ([#25](https://github.com/kellerlabs/pre-commit-hooks/issues/25)) ([157947f](https://github.com/kellerlabs/pre-commit-hooks/commit/157947f76bb13f2f77997acbd4ec1bfc88914ee8))
+
+
+### 🔄 CI/CD
+
+* **instructions:** sync from homeracker ([14089da](https://github.com/kellerlabs/pre-commit-hooks/commit/14089dacd46124329460405a39b6fa0e851e40d3))
+
 ## [0.3.5](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.4...pre-commit-hooks-v0.3.5) (2026-05-25)
 
 
