@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.7](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.6...pre-commit-hooks-v0.3.7) (2026-06-20)
+
+
+### 📦 Dependencies
+
+* update github actions to v7 ([#26](https://github.com/kellerlabs/pre-commit-hooks/issues/26)) ([45bd01e](https://github.com/kellerlabs/pre-commit-hooks/commit/45bd01e60ca1689cbb3c1b7fcd8cb4d31cf71d20))
+
 ## [0.3.6](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.5...pre-commit-hooks-v0.3.6) (2026-06-14)
 
 
