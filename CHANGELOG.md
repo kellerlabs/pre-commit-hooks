@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.9](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.8...pre-commit-hooks-v0.3.9) (2026-07-25)
+
+
+### 📦 Dependencies
+
+* update actions/setup-python action to v7 ([#29](https://github.com/kellerlabs/pre-commit-hooks/issues/29)) ([216d4c7](https://github.com/kellerlabs/pre-commit-hooks/commit/216d4c7a809ff1cc2d6d2f6f546741a0e4413b09))
+
 ## [0.3.8](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.7...pre-commit-hooks-v0.3.8) (2026-06-22)
 
 
