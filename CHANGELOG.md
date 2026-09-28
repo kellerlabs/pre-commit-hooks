@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.12](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.11...pre-commit-hooks-v0.3.12) (2026-09-26)
+
+
+### 📦 Dependencies
+
+* update pre-commit hook pycqa/pylint to v4.0.9 ([#35](https://github.com/kellerlabs/pre-commit-hooks/issues/35)) ([ea2d237](https://github.com/kellerlabs/pre-commit-hooks/commit/ea2d23711b41cdab7f73acbfc5d0adac71a5e72e))
+
 ## [0.3.11](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.10...pre-commit-hooks-v0.3.11) (2026-08-29)
 
 
