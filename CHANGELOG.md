@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.13](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.12...pre-commit-hooks-v0.3.13) (2026-10-05)
+
+
+### 📦 Dependencies
+
+* update pre-commit hook psf/black to v26.10.0 ([#39](https://github.com/kellerlabs/pre-commit-hooks/issues/39)) ([ac03a04](https://github.com/kellerlabs/pre-commit-hooks/commit/ac03a044bb83e70e4327add39cb67a91fb5e1b08))
+* update pre-commit hook pycqa/pylint to v4.1.2 ([#37](https://github.com/kellerlabs/pre-commit-hooks/issues/37)) ([1489292](https://github.com/kellerlabs/pre-commit-hooks/commit/1489292277374b8c8aed6f2b290ff3265f5363e9))
+
 ## [0.3.12](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.11...pre-commit-hooks-v0.3.12) (2026-09-26)
 
 
