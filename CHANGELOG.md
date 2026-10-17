@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.15](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.14...pre-commit-hooks-v0.3.15) (2026-10-17)
+
+
+### 📦 Dependencies
+
+* update actions/create-github-app-token action to v3.3.0 ([#44](https://github.com/kellerlabs/pre-commit-hooks/issues/44)) ([422afad](https://github.com/kellerlabs/pre-commit-hooks/commit/422afadbb83fbad92048442f17754553399efafb))
+
 ## [0.3.14](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.13...pre-commit-hooks-v0.3.14) (2026-10-11)
 
 
