@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.16](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.15...pre-commit-hooks-v0.3.16) (2026-10-31)
+
+
+### 📦 Dependencies
+
+* update pre-commit hook compilerla/conventional-pre-commit to v4.5.0 ([#46](https://github.com/kellerlabs/pre-commit-hooks/issues/46)) ([9d8c10a](https://github.com/kellerlabs/pre-commit-hooks/commit/9d8c10a8463b8a8fbf4cb4b2f119239cebfdb17d))
+
 ## [0.3.15](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.14...pre-commit-hooks-v0.3.15) (2026-10-17)
 
 
