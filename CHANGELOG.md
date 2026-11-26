@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.19](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.18...pre-commit-hooks-v0.3.19) (2026-11-26)
+
+
+### 🔄 CI/CD
+
+* remove the sync-instructions workflow ([#52](https://github.com/kellerlabs/pre-commit-hooks/issues/52)) ([bba0249](https://github.com/kellerlabs/pre-commit-hooks/commit/bba024963e2ac48ead2ee6af8ba41481599beaa2))
+
 ## [0.3.18](https://github.com/kellerlabs/pre-commit-hooks/compare/pre-commit-hooks-v0.3.17...pre-commit-hooks-v0.3.18) (2026-11-21)
 
 
